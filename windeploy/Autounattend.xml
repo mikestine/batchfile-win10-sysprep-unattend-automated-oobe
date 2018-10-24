@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+    <settings pass="windowsPE">
+        <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <SetupUILanguage>
+                <UILanguage>en-US</UILanguage>
+            </SetupUILanguage>
+            <InputLocale>0409:00000409</InputLocale>
+            <SystemLocale>en-US</SystemLocale>
+            <UILanguage>en-US</UILanguage>
+            <UserLocale>en-US</UserLocale>
+        </component>        
+    </settings>
+    <settings pass="oobeSystem">
+        <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <InputLocale>0409:00000409</InputLocale>
+            <SystemLocale>en-US</SystemLocale>
+            <UILanguage>en-US</UILanguage>
+            <UserLocale>en-US</UserLocale>
+            <UILanguageFallback>en-US</UILanguageFallback>
+        </component>
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <OOBE>
+                <HideEULAPage>true</HideEULAPage>
+                <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
+                <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+                <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+                <ProtectYourPC>3</ProtectYourPC>
+                <NetworkLocation>Home</NetworkLocation>
+                <SkipMachineOOBE>true</SkipMachineOOBE>
+                <SkipUserOOBE>true</SkipUserOOBE>
+            </OOBE>
+            <UserAccounts>
+                <AdministratorPassword>
+                    <Value>cABhAHMAcwB3AG8AcgBkAEEAZABtAGkAbgBpAHMAdAByAGEAdABvAHIAUABhAHMAcwB3AG8AcgBkAA==</Value>
+                    <PlainText>false</PlainText>
+                </AdministratorPassword>
+            </UserAccounts>
+            <TimeZone>Pacific Standard Time</TimeZone>
+            <AutoLogon>
+                <Password>
+                    <Value>cABhAHMAcwB3AG8AcgBkAFAAYQBzAHMAdwBvAHIAZAA=</Value>
+                    <PlainText>false</PlainText>
+                </Password>
+                <LogonCount>999</LogonCount>
+                <Username>Administrator</Username>
+                <Enabled>true</Enabled>
+                <Domain></Domain>
+            </AutoLogon>
+            <FirstLogonCommands>
+                <SynchronousCommand wcm:action="add">
+                    <CommandLine>reg add HKLM\System\CurrentControlSet\Control\Network\NewNetworkWindowOff</CommandLine>
+                    <Description>Disable the network discovery prompt window</Description>
+                    <Order>1</Order>
+                    <RequiresUserInput>true</RequiresUserInput>
+                </SynchronousCommand>
+            </FirstLogonCommands>
+            <ShowWindowsLive>false</ShowWindowsLive>
+        </component>
+    </settings>
+    <settings pass="specialize">
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <CopyProfile>true</CopyProfile>
+            <OEMName>Win10TemplateOEM</OEMName>
+            <TimeZone>Pacific Standard Time</TimeZone>
+            <RegisteredOwner>Admin</RegisteredOwner>
+            <ComputerName>Win10Template</ComputerName>
+            <OEMInformation>
+                <HelpCustomized>false</HelpCustomized>
+            </OEMInformation>
+        </component>
+        <component name="Microsoft-Windows-TerminalServices-LocalSessionManager" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <fDenyTSConnections>false</fDenyTSConnections>
+        </component>
+        <component name="Networking-MPSSVC-Svc" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <FirewallGroups>
+                <FirewallGroup wcm:action="add" wcm:keyValue="RemoteDesktop">
+                    <Active>true</Active>
+                    <Group>Remote Desktop</Group>
+                    <Profile>all</Profile>
+                </FirewallGroup>
+            </FirewallGroups>
+            <DomainProfile_DisableNotifications>true</DomainProfile_DisableNotifications>
+            <DomainProfile_EnableFirewall>false</DomainProfile_EnableFirewall>
+            <PrivateProfile_EnableFirewall>false</PrivateProfile_EnableFirewall>
+            <PrivateProfile_DisableNotifications>true</PrivateProfile_DisableNotifications>
+            <PublicProfile_DisableNotifications>true</PublicProfile_DisableNotifications>
+            <PublicProfile_EnableFirewall>false</PublicProfile_EnableFirewall>
+        </component>
+        <component name="Microsoft-Windows-TerminalServices-RDP-WinStationExtensions" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <UserAuthentication>0</UserAuthentication>
+        </component>
+        <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <InputLocale>0409:00000409</InputLocale>
+            <UILanguage>en-US</UILanguage>
+            <SystemLocale>en-US</SystemLocale>
+            <UserLocale>en-US</UserLocale>
+        </component>
+        <component name="Microsoft-Windows-Security-SPP-UX" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <SkipAutoActivation>true</SkipAutoActivation>
+        </component>
+    </settings>
+    <settings pass="offlineServicing">
+        <component name="Microsoft-Windows-LUA-Settings" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <EnableLUA>false</EnableLUA>
+        </component>
+    </settings>
+    <cpi:offlineImage cpi:source="wim:c:/temp/win10_disk/sources/install.wim#Windows 10 Pro" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
+</unattend>

@@ -1,0 +1,105 @@
+# batchfile-sysprep-win10-unattend-automated-oobe
+This batch file Syspreps Window 10 image.  The deployed image will not ask any of the oobe questions, and will auto-login into admin account
+
+Automate OOBE
+https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/automate-oobe
+
+Answer File Best Practices
+https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/wsim/best-practices-for-authoring-answer-files
+
+There are two components in which you can specify language settings:
+
+Microsoft-Windows-International-Core-WinPE. Language settings are applied during the windowsPE configuration pass.
+Microsoft-Windows-International-Core. Language settings are applied during the specialize or oobeSystem configuration pass
+
+Change the Windows Image to a Higher Edition Using DISM
+https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/change-the-windows-image-to-a-higher-edition-using-dism
+
+
+Modify a Windows Image Using DISM
+https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/mount-and-modify-a-windows-image-using-dism
+
+Mount Iso
+Open a command prompt with administrator privilege
+
+Use DISM to mount the image
+DISM /Mount-image /imagefile:<path_to_Image_file> {/Index:<image_index> | /Name:<image_name>} /MountDir:<target_mount_directory> [/readonly] /[optimize]}
+
+dism /source:E:\sources
+ 
+########################
+Get the index of Windows Server edition 
+ 
+dism /Get-WimInfo /WimFile:G:\sources\install.wim
+
+identified the index of the Windows Server edition
+########################
+Deployment Image Servicing and Management tool
+Version: 10.0.17134.1
+
+Details for image : E:\sources\install.wim
+
+Index : 1
+Name : Windows 10 Pro
+Description : Windows 10 Pro
+Size : 15,411,846,914 bytes
+
+The operation completed successfully.
+########################
+
+Looks like index 1 is our index.
+
+Update the install.wim
+you have identified the index of the Windows Server edition, we can mount the image by using the following command:
+ 
+*** Dism.exe /Mount-Wim /WimFile:E:\sources\install.wim /index:1 /mountdir:c:\temp\mountdir
+
+
+Download the latest cumulative update
+
+https://support.microsoft.com/en-gb/help/4000825/windows-10-windows-server-2016-update-history
+
+
+Select the cumulative update and click on Microsoft Update Catalog (footer of the page).
+DOWNLOAD 2 updates...
+
+Servicing stack update (SSU) (KB4132216) must be installed before installing the latest cumulative update (LCU) (KB4343884). 
+
+ 
+
+Go back to the command prompt and run the following command:
+
+ 
+*** Dism /image:c:\temp\mountdir /add-package /packagepath:<path to the cumulative update>
+
+
+for /f %%a in ('wevtutil enum-logs') do wevtutil clear-log "%%a"
+
+For /R C:\temp\packages\ %%G IN (*.cab) do dism /image: /add-package /packagepath: "%%G"
+
+
+It can take a long time to install the update in the image. For this example, It took 45 minutes to patch the Windows Server image. You can also install several updates in a row by using the following command:
+
+
+ 
+DISM /image:c:\mountdir /Add-Package /PackagePath:"C:\MyFolder\Updates" /recurse
+You can add drivers in the image with the following command:
+
+
+ 
+Dism /Image:C:\temp\mountdir /Add-Driver /Driver:”c:\MyFolder\Drivers” /Recurse
+
+
+nce the updates/drivers are added, you have to commit change to the image. You can do it by using the following command:
+
+
+ 
+Dism.exe /unmount-wim /mountdir:c:\temp\mountdir /commit
+If you want to discard change, you and revert change, you can run the following command:
+
+
+ 
+Dism.exe /unmount-wim /mountdir:c:\temp\mountdir /dicard
+
+
+https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/automate-windows-setup
